@@ -5,8 +5,6 @@
 
 module Data.Conduit.BZlib.Internal where
 
-#strict_import
-
 #num BZ_RUN
 #num BZ_FLUSH
 #num BZ_FINISH
