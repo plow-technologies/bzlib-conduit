@@ -1,9 +1,12 @@
+
 {-# LANGUAGE ForeignFunctionInterface #-}
 
 #include <bzlib.h>
 #include <bindings.dsl.h>
 
 module Data.Conduit.BZlib.Internal where
+
+#strict_import
 
 #num BZ_RUN
 #num BZ_FLUSH
