@@ -6,8 +6,6 @@
 
 module Data.Conduit.BZlib.Internal where
 
-#strict_import
-
 #num BZ_RUN
 #num BZ_FLUSH
 #num BZ_FINISH
@@ -48,4 +46,4 @@ module Data.Conduit.BZlib.Internal where
 
 #ccall BZ2_bzDecompressInit, Ptr <bz_stream> -> CInt -> CInt -> IO CInt
 #ccall BZ2_bzDecompress, Ptr <bz_stream> -> IO CInt
-#ccall BZ2_bzDecompressEnd, Ptr <bz_stream> -> IO CInt
+#ccall BZ2_bzDecompressEnd, Ptr <bz_stream> -> IO CInt 
