@@ -77,20 +77,129 @@ c'BZ_OUTBUFF_FULL = (-8)
 c'BZ_CONFIG_ERROR :: CInt
 c'BZ_CONFIG_ERROR = (-9)
 
-#starttype bz_stream
-#field next_in,        Ptr CChar
-#field avail_in,       CUInt
-#field total_in_lo32,  CUInt
-#field total_in_hi32,  CUInt
-#field next_out,       Ptr CChar
-#field avail_out,      CUInt
-#field total_out_lo32, CUInt
-#field total_out_hi32, CUInt
-#field state,          Ptr ()
-#field bzalloc,        Ptr ()
-#field bzfree,         Ptr ()
-#field opaque,         Ptr ()
-#stoptype
+
+-- #starttype bz_stream
+-- #field next_in,        Ptr CChar
+-- #field avail_in,       CUInt
+-- #field total_in_lo32,  CUInt
+-- #field total_in_hi32,  CUInt
+-- #field next_out,       Ptr CChar
+-- #field avail_out,      CUInt
+-- #field total_out_lo32, CUInt
+-- #field total_out_hi32, CUInt
+-- #field state,          Ptr ()
+-- #field bzalloc,        Ptr ()
+-- #field bzfree,         Ptr ()
+-- #field opaque,         Ptr ()
+-- #stoptype
+
+data C'bz_stream = C'bz_stream {
+  c'bz_stream'next_in :: Ptr CChar,
+  c'bz_stream'avail_in :: CUInt,
+  c'bz_stream'total_in_lo32 :: CUInt,
+  c'bz_stream'total_in_hi32 :: CUInt,
+  c'bz_stream'next_out :: Ptr CChar,
+  c'bz_stream'avail_out :: CUInt,
+  c'bz_stream'total_out_lo32 :: CUInt,
+  c'bz_stream'total_out_hi32 :: CUInt,
+  c'bz_stream'state :: Ptr (),
+  c'bz_stream'bzalloc :: Ptr (),
+  c'bz_stream'bzfree :: Ptr (),
+  c'bz_stream'opaque :: Ptr ()
+} deriving (Eq, Show)
+
+instance Storable C'bz_stream where
+    sizeOf    _ = (#size bz_stream)
+    alignment _ = alignment (undefined :: CInt)
+    peek ptr = do
+        next_in <- (#peek bz_stream, next_in) ptr
+        avail_in <- (#peek bz_stream, avail_in) ptr
+        total_in_lo32 <- (#peek bz_stream, total_in_lo32) ptr
+        total_in_hi32 <- (#peek bz_stream, total_in_hi32) ptr
+        next_out <- (#peek bz_stream, next_out) ptr
+        avail_out <- (#peek bz_stream, avail_out) ptr
+        total_out_lo32 <- (#peek bz_stream, total_out_lo32) ptr
+        total_out_hi32 <- (#peek bz_stream, total_out_hi32) ptr
+        state <- (#peek bz_stream, state) ptr
+        bzalloc <- (#peek bz_stream, bzalloc) ptr
+        bzfree <- (#peek bz_stream, bzfree) ptr
+        opaque <- (#peek bz_stream, opaque) ptr
+        return  (C'bz_stream {
+          c'bz_stream'next_in = next_in,
+          c'bz_stream'avail_in = avail_in,
+          c'bz_stream'total_in_lo32 = total_in_lo32,
+          c'bz_stream'total_in_hi32 = total_in_hi32,
+          c'bz_stream'next_out = next_out,
+          c'bz_stream'avail_out = avail_out,
+          c'bz_stream'total_out_lo32 = total_out_lo32,
+          c'bz_stream'total_out_hi32 = total_out_hi32,
+          c'bz_stream'state = state,
+          c'bz_stream'bzalloc = bzalloc,
+          c'bz_stream'bzfree = bzfree,
+          c'bz_stream'opaque = opaque
+        })
+    poke ptr (C'bz_stream {
+      c'bz_stream'next_in = next_in,
+      c'bz_stream'avail_in = avail_in,
+      c'bz_stream'total_in_lo32 = total_in_lo32,
+      c'bz_stream'total_in_hi32 = total_in_hi32,
+      c'bz_stream'next_out = next_out,
+      c'bz_stream'avail_out = avail_out,
+      c'bz_stream'total_out_lo32 = total_out_lo32,
+      c'bz_stream'total_out_hi32 = total_out_hi32,
+      c'bz_stream'state = state,
+      c'bz_stream'bzalloc = bzalloc,
+      c'bz_stream'bzfree = bzfree,
+      c'bz_stream'opaque = opaque
+    }) = do
+        (#poke bz_stream, next_in) ptr next_in
+        (#poke bz_stream, avail_in) ptr avail_in
+        (#poke bz_stream, total_in_lo32) ptr total_in_lo32
+        (#poke bz_stream, total_in_hi32) ptr total_in_hi32
+        (#poke bz_stream, next_out) ptr next_out
+        (#poke bz_stream, avail_out) ptr avail_out
+        (#poke bz_stream, total_out_lo32) ptr total_out_lo32
+        (#poke bz_stream, total_out_hi32) ptr total_out_hi32
+        (#poke bz_stream, state) ptr state
+        (#poke bz_stream, bzalloc) ptr bzalloc
+        (#poke bz_stream, bzfree) ptr bzfree
+        (#poke bz_stream, opaque) ptr opaque
+
+p'bz_stream'next_in :: Ptr C'bz_stream -> Ptr (Ptr CChar)
+p'bz_stream'next_in p = plusPtr p (#offset bz_stream, next_in)
+
+p'bz_stream'avail_in :: Ptr C'bz_stream -> Ptr CUInt
+p'bz_stream'avail_in p = plusPtr p (#offset bz_stream, avail_in)
+
+p'bz_stream'total_in_lo32 :: Ptr C'bz_stream -> Ptr CUInt
+p'bz_stream'total_in_lo32 p = plusPtr p (#offset bz_stream, total_in_lo32)
+
+p'bz_stream'total_in_hi32 :: Ptr C'bz_stream -> Ptr CUInt
+p'bz_stream'total_in_hi32 p = plusPtr p (#offset bz_stream, total_in_hi32)
+
+p'bz_stream'next_out :: Ptr C'bz_stream -> Ptr (Ptr CChar)
+p'bz_stream'next_out p = plusPtr p (#offset bz_stream, next_out)
+
+p'bz_stream'avail_out :: Ptr C'bz_stream -> Ptr CUInt
+p'bz_stream'avail_out p = plusPtr p (#offset bz_stream, avail_out)
+
+p'bz_stream'total_out_lo32 :: Ptr C'bz_stream -> Ptr CUInt
+p'bz_stream'total_out_lo32 p = plusPtr p (#offset bz_stream, total_out_lo32)
+
+p'bz_stream'total_out_hi32 :: Ptr C'bz_stream -> Ptr CUInt
+p'bz_stream'total_out_hi32 p = plusPtr p (#offset bz_stream, total_out_hi32)
+
+p'bz_stream'state :: Ptr C'bz_stream -> Ptr (Ptr ())
+p'bz_stream'state p = plusPtr p (#offset bz_stream, state)
+
+p'bz_stream'bzalloc :: Ptr C'bz_stream -> Ptr (Ptr ())
+p'bz_stream'bzalloc p = plusPtr p (#offset bz_stream, bzalloc)
+
+p'bz_stream'bzfree :: Ptr C'bz_stream -> Ptr (Ptr ())
+p'bz_stream'bzfree p = plusPtr p (#offset bz_stream, bzfree)
+
+p'bz_stream'opaque :: Ptr C'bz_stream -> Ptr (Ptr ())
+p'bz_stream'opaque p = plusPtr p (#offset bz_stream, opaque)
 
 #ccall BZ2_bzCompressInit, Ptr <bz_stream> -> CInt -> CInt -> CInt -> IO CInt
 #ccall BZ2_bzCompress, Ptr <bz_stream> -> CInt -> IO CInt
