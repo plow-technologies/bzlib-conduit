@@ -201,10 +201,26 @@ p'bz_stream'bzfree p = plusPtr p (#offset bz_stream, bzfree)
 p'bz_stream'opaque :: Ptr C'bz_stream -> Ptr (Ptr ())
 p'bz_stream'opaque p = plusPtr p (#offset bz_stream, opaque)
 
-#ccall BZ2_bzCompressInit, Ptr <bz_stream> -> CInt -> CInt -> CInt -> IO CInt
-#ccall BZ2_bzCompress, Ptr <bz_stream> -> CInt -> IO CInt
-#ccall BZ2_bzCompressEnd, Ptr <bz_stream> -> IO CInt
+-- #ccall BZ2_bzCompressInit, Ptr <bz_stream> -> CInt -> CInt -> CInt -> IO CInt
+foreign import ccall unsafe "bzlib.h BZ2_bzCompressInit"
+     c'BZ2_bzCompressInit :: Ptr C'bz_stream -> CInt -> CInt -> CInt -> IO CInt
 
-#ccall BZ2_bzDecompressInit, Ptr <bz_stream> -> CInt -> CInt -> IO CInt
-#ccall BZ2_bzDecompress, Ptr <bz_stream> -> IO CInt
-#ccall BZ2_bzDecompressEnd, Ptr <bz_stream> -> IO CInt
+-- #ccall BZ2_bzCompress, Ptr <bz_stream> -> CInt -> IO CInt
+foreign import ccall unsafe "bzlib.h BZ2_bzCompress"
+     c'BZ2_bzCompress :: Ptr C'bz_stream -> CInt -> IO CInt
+
+-- #ccall BZ2_bzCompressEnd, Ptr <bz_stream> -> IO CInt
+foreign import ccall unsafe "bzlib.h BZ2_bzCompressEnd"
+     c'BZ2_bzCompressEnd :: Ptr C'bz_stream -> IO CInt
+
+-- #ccall BZ2_bzDecompressInit, Ptr <bz_stream> -> CInt -> CInt -> IO CInt
+foreign import ccall unsafe "bzlib.h BZ2_bzDecompressInit"
+     c'BZ2_bzDecompressInit :: Ptr C'bz_stream -> CInt -> CInt -> IO CInt
+
+-- #ccall BZ2_bzDecompress, Ptr <bz_stream> -> IO CInt
+foreign import ccall unsafe "bzlib.h BZ2_bzDecompress"
+     c'BZ2_bzDecompress :: Ptr C'bz_stream -> IO CInt
+
+-- #ccall BZ2_bzDecompressEnd, Ptr <bz_stream> -> IO CInt
+foreign import ccall unsafe "bzlib.h BZ2_bzDecompressEnd"
+     c'BZ2_bzDecompressEnd :: Ptr C'bz_stream -> IO CInt
