@@ -40,10 +40,10 @@ module Data.Conduit.BZlib.Internal where
 #field opaque,         Ptr ()
 #stoptype
 
-#ccall BZ2_bzCompressInit, Ptr <bz_stream> -> CInt -> CInt -> CInt -> IO CInt
-#ccall BZ2_bzCompress, Ptr <bz_stream> -> CInt -> IO CInt
-#ccall BZ2_bzCompressEnd, Ptr <bz_stream> -> IO CInt
-
 #ccall BZ2_bzDecompressInit, Ptr <bz_stream> -> CInt -> CInt -> IO CInt
 #ccall BZ2_bzDecompress, Ptr <bz_stream> -> IO CInt
 #ccall BZ2_bzDecompressEnd, Ptr <bz_stream> -> IO CInt 
+
+#ccall BZ2_bzCompressInit, Ptr <bz_stream> -> CInt -> CInt -> CInt -> IO CInt
+#ccall BZ2_bzCompress, Ptr <bz_stream> -> CInt -> IO CInt
+#ccall BZ2_bzCompressEnd, Ptr <bz_stream> -> IO CInt
